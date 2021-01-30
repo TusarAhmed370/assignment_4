@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <section id="block-area">
+        <header class="container">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a class="active" href="#">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <!--Booking Section-->
+        <main class="main-content container">
+    
+            <div class="booking-content">
+                <h1>Cruise Queen</h1>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+            </div>
+    
+    
+            <div class="booking-form">
+                <h3>Book Ocean Time</h3>
+                <div class="input-group">
+                    <label for="">Flying From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+                </div>
+                <div class="input-group">
+                    <label for="">Flying To</label>
+                    <input class="inp-style" type="text" name="" placeholder="New York, United States">
+                </div>
+                <div class="inputs">
+                    <div class="input-group">
+                        <label" for="">Departure</label>
+                        <input class="inp-style" type="date" name="">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Return</label>
+                        <input class="inp-style" type="date" name="">
+                    </div>
+                </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label id="first-total" for="">First Class ($150)</label>
+                        <input id="first-count" class="inp-style inp-width" type="number" value="0" name="">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <button onclick="handleEconomyChange('first',true)">+</button>
+                        <button onclick="handleEconomyChange('first',false)">-</button>
+                    </div>
+                </div>
+                
+                <div class="input-group f-class">
+                    <div>
+                        <label id="economy-total" for="">Economy ($100)</label>
+                        <input id="economy-count" class="inp-style inp-width" type="number" value="0" name="">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <button onclick="handleEconomyChange('economy',true)">+</button>
+                        <button onclick="handleEconomyChange('economy',false)">-</button>
+                    </div>
+                </div>
+                <div class="calculations">
+                    <div class="amount">
+                        <div class="left">
+                            <p>Subtotal</p>
+                        </div>
+                        <div class="right">
+                            <p id="total-price">$00</p>
+                        </div>
+                    </div>
+    
+                    <div class="amount">
+                        <div class="left">
+                            <p>Charge 10% VAT</p>
+                        </div>
+                        <div class="right">
+                            <p id="tax-amount">$00</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="amount">
+                        <div class="left">
+                            <h4>Total</h4>
+                        </div>
+                        <div class="right">
+                            <p id="grand-total">$00</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="block" class="btn-style">Book Now</button>
+            </div>
+            
+        </main>
+    </section>
+    <section id="confirm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="success">
+                    <h1>Successful</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const blockBtn = document.getElementById('block');
+        blockBtn.addEventListener('click',function(){
+            const blockArea = document.getElementById('block-area');
+            blockArea.style.display = 'none';
+            const confirmArea = document.getElementById('confirm');
+            confirmArea.style.display = 'block';
+        })
+
+
+
+        function handleEconomyChange(cost, isIncrease){
+            const costCount = getInputValue(cost + '-count');
+            let costNewCount = costCount;
+            if(isIncrease == true){
+                costNewCount = costCount + 1;
+            }
+            if(isIncrease == false && costCount > 0){
+                costNewCount = costCount - 1;
+            }
+            document.getElementById(cost + '-count').value = costNewCount;
+            calculateTotal();
+        }
+
+        function calculateTotal(){
+            const firstCount = getInputValue('first-count');
+            const economyCount = getInputValue('economy-count');
+
+            const totalPrice = firstCount*150 + economyCount*100;
+            document.getElementById('total-price').innerText = '$' + totalPrice;
+
+            const tax = Math.round(totalPrice * 0.1);
+            document.getElementById('tax-amount').innerText = '$' + tax;
+
+            const grandTotal = totalPrice + tax;
+            document.getElementById('grand-total').innerText = '$' + grandTotal;
+        }
+        function getInputValue(id){
+            const costInput = document.getElementById(id);
+            const costCount = parseInt(costInput.value);
+            return costCount;
+        }
+
+    </script>
+    <!--Thank You-->
+</body>
+
+</html>
